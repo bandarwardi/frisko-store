@@ -426,6 +426,54 @@
           </div>
         }
 
+        <!-- Volumes -->
+        @if (filtersData()?.volumes && filtersData()!.volumes.length > 0) {
+          <div class="pt-4 border-t border-gray-100">
+            <h4 class="text-xs font-black uppercase tracking-wider text-gray-400 mb-3">
+              {{ 'FILTER.VOLUMES' | translate }}
+            </h4>
+            <div class="flex flex-wrap gap-2">
+              @for (v of filtersData()!.volumes; track v.name) {
+                <button
+                  type="button"
+                  (click)="toggleVariant(v.name)"
+                  class="px-3 py-2 rounded-xl text-xs font-bold border transition text-center"
+                  [class.bg-black]="isVariantSelected(v.name)"
+                  [class.text-white]="isVariantSelected(v.name)"
+                  [class.border-black]="isVariantSelected(v.name)"
+                  [class.border-gray-200]="!isVariantSelected(v.name)"
+                >
+                  {{ v.name }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
+        <!-- Other Options -->
+        @if (filtersData()?.other_options && filtersData()!.other_options.length > 0) {
+          <div class="pt-4 border-t border-gray-100">
+            <h4 class="text-xs font-black uppercase tracking-wider text-gray-400 mb-3">
+              {{ 'FILTER.OTHER_OPTIONS' | translate }}
+            </h4>
+            <div class="flex flex-wrap gap-2">
+              @for (o of filtersData()!.other_options; track o.name) {
+                <button
+                  type="button"
+                  (click)="toggleVariant(o.name)"
+                  class="px-3 py-2 rounded-xl text-xs font-bold border transition text-center"
+                  [class.bg-black]="isVariantSelected(o.name)"
+                  [class.text-white]="isVariantSelected(o.name)"
+                  [class.border-black]="isVariantSelected(o.name)"
+                  [class.border-gray-200]="!isVariantSelected(o.name)"
+                >
+                  {{ o.name }}
+                </button>
+              }
+            </div>
+          </div>
+        }
+
         <!-- Price -->
         <div class="pt-4 border-t border-gray-100">
           <h4 class="text-xs font-black uppercase tracking-wider text-gray-400 mb-3">

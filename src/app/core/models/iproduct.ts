@@ -32,6 +32,25 @@ export interface IProductFiltersData {
   other_options: IFilterOptionItem[];
 }
 
+export interface IOptionValue {
+  id: number;
+  product_option_id: number;
+  value: string;
+  hex_color?: string | null;
+  image?: string | null;
+  sort_order?: number;
+}
+
+export interface IProductOption {
+  id: number;
+  product_id: number;
+  code: string;
+  name: string;
+  display_type: 'color_swatch' | 'button' | 'dropdown';
+  sort_order?: number;
+  values: IOptionValue[];
+}
+
 export interface IVariant {
   id: number;
   product_id: number;
@@ -41,6 +60,9 @@ export interface IVariant {
   stock: number;
   sku?: string | null;
   image?: string | null;
+  is_active?: boolean;
+  is_default?: boolean;
+  option_value_ids?: number[];
   created_at?: string;
   updated_at?: string;
 }
@@ -72,6 +94,7 @@ export interface Iproduct {
   brand: Brand;
   images: any[];
   tags: Tag[];
+  options?: IProductOption[];
   variants?: IVariant[];
 }
 

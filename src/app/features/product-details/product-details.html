@@ -111,8 +111,87 @@
               }
             </div>
 
-            <!-- خيارات المنتج (Variants) -->
-            @if (prod.variants && prod.variants.length > 0) {
+            <!-- خيارات المنتج المهيكلة (Options Matrix) -->
+            @if (hasStructuredOptions()) {
+              <div class="mt-6 pt-5 border-t border-gray-100 space-y-5">
+                @for (opt of prod.options; track opt.id; let optIdx = $index) {
+                  <div>
+                    <div class="flex items-center justify-between mb-2.5">
+                      <span class="text-xs font-black text-gray-900 uppercase tracking-wider">
+                        {{ opt.name }}:
+                        <span class="text-gray-500 font-bold ms-1">{{ getSelectedValueLabel(opt) }}</span>
+                      </span>
+                    </div>
+
+                    @if (opt.display_type === 'color_swatch') {
+                      <div class="flex flex-wrap gap-2.5">
+                        @for (val of opt.values; track val.id) {
+                          <button
+                            type="button"
+                            (click)="selectOptionValue(opt.id, val.id)"
+                            [title]="val.value"
+                            class="group relative flex items-center gap-2 px-3 py-2 rounded-xl border text-xs font-bold transition cursor-pointer"
+                            [class.border-black]="isOptionValueSelected(opt.id, val.id)"
+                            [class.ring-2]="isOptionValueSelected(opt.id, val.id)"
+                            [class.ring-black]="isOptionValueSelected(opt.id, val.id)"
+                            [class.bg-gray-50]="isOptionValueSelected(opt.id, val.id)"
+                            [class.border-gray-200]="!isOptionValueSelected(opt.id, val.id)"
+                            [class.hover:border-black]="!isOptionValueSelected(opt.id, val.id)"
+                            [class.opacity-40]="isOptionValueOutOfStock(optIdx, opt.id, val.id)"
+                          >
+                            @if (val.image) {
+                              <img [src]="val.image" [alt]="val.value" class="w-5 h-5 rounded-full object-cover border border-gray-300 shrink-0" />
+                            } @else {
+                              <span
+                                class="w-5 h-5 rounded-full border border-gray-300 shrink-0"
+                                [style.background-color]="val.hex_color || '#111827'"
+                              ></span>
+                            }
+                            <span>{{ val.value }}</span>
+                          </button>
+                        }
+                      </div>
+                    } @else if (opt.display_type === 'dropdown') {
+                      <select
+                        class="w-full sm:w-64 border border-gray-200 rounded-xl px-4 py-2.5 text-sm font-bold bg-white outline-none focus:border-black"
+                        [value]="selectedOptionValues()[opt.id]"
+                        (change)="selectOptionValue(opt.id, +$any($event.target).value)"
+                      >
+                        @for (val of opt.values; track val.id) {
+                          <option [value]="val.id">
+                            {{ val.value }}
+                            @if (isOptionValueOutOfStock(optIdx, opt.id, val.id)) {
+                              ({{ 'PRODUCT_DETAILS.OUT_OF_STOCK' | translate }})
+                            }
+                          </option>
+                        }
+                      </select>
+                    } @else {
+                      <div class="flex flex-wrap gap-2.5">
+                        @for (val of opt.values; track val.id) {
+                          <button
+                            type="button"
+                            (click)="selectOptionValue(opt.id, val.id)"
+                            class="min-w-12 px-4 py-2.5 rounded-xl border text-sm font-bold transition cursor-pointer"
+                            [class.border-black]="isOptionValueSelected(opt.id, val.id)"
+                            [class.bg-black]="isOptionValueSelected(opt.id, val.id)"
+                            [class.text-white]="isOptionValueSelected(opt.id, val.id)"
+                            [class.border-gray-200]="!isOptionValueSelected(opt.id, val.id)"
+                            [class.text-gray-800]="!isOptionValueSelected(opt.id, val.id)"
+                            [class.hover:border-black]="!isOptionValueSelected(opt.id, val.id)"
+                            [class.opacity-40]="isOptionValueOutOfStock(optIdx, opt.id, val.id)"
+                            [class.line-through]="isOptionValueOutOfStock(optIdx, opt.id, val.id)"
+                          >
+                            {{ val.value }}
+                          </button>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            } @else if (prod.variants && prod.variants.length > 0) {
+              <!-- توافق للخيارات البسيطة السابقة -->
               <div class="mt-6 pt-5 border-t border-gray-100">
                 <div class="flex items-center justify-between mb-3">
                   <span class="text-xs font-black text-gray-900 uppercase tracking-wider">
