@@ -36,7 +36,7 @@ export class Register {
       this.sauth.signUp(this.registerForm.value).subscribe({
         next: (res) => {
           // console.log(res);
-          if (res.message === 'تم إنشاء الحساب بنجاح') {
+          if (res.success || res.message === 'تم إنشاء الحساب بنجاح' || res.data) {
             this.router.navigate(['/auth/login']);
           }
         },

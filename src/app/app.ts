@@ -23,10 +23,9 @@ export class App {
     // call addLangs() to register additional languages the user can switch to.
     this.translate.addLangs(['tr', 'en', 'ar']);
     if (isPlatformBrowser(this.pLATFORM_ID)) {
-      if (localStorage.getItem('lang')) {
-        this.translate.use(localStorage.getItem('lang')!);
-        this.myTranslateService.chengeDirection();
-      }
+      const activeLang = localStorage.getItem('lang') || 'tr';
+      this.translate.use(activeLang);
+      this.myTranslateService.chengeDirection();
       initFlowbite();
     }
   }

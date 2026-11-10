@@ -1,16 +1,16 @@
-<div class="container mx-auto px-4 py-8 font-sans" dir="rtl">
+<div class="container mx-auto px-4 py-8 font-sans">
   <!-- زر العودة -->
   <div class="mb-6">
     <a
       routerLink="/shop"
       class="inline-flex cursor-pointer items-center gap-2 text-gray-600 hover:text-black font-semibold transition text-sm"
     >
-      ← العودة للمنتجات
+      <span class="rtl:rotate-180 inline-block">&larr;</span> {{ 'PRODUCT_DETAILS.BACK_TO_PRODUCTS' | translate }}
     </a>
   </div>
 
   @if (isLoading()) {
-    <div class="text-center py-20 text-gray-500 text-lg">جاري تحميل تفاصيل المنتج...</div>
+    <div class="text-center py-20 text-gray-500 text-lg">{{ 'PRODUCT_DETAILS.LOADING' | translate }}</div>
   } @else {
     @if (product(); as prod) {
       <div
@@ -22,15 +22,15 @@
         >
           @if (prod.badge_label) {
             <span
-              class="absolute top-4 right-4 z-10 bg-black text-white text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-md tracking-wider uppercase"
+              class="absolute top-4 start-4 z-10 bg-black text-white text-xs font-extrabold px-3.5 py-1.5 rounded-full shadow-md tracking-wider uppercase"
             >
               {{ prod.badge_label }}
             </span>
           }
           <img
-            [src]="prod.primary_image"
+            [src]="displayImage()"
             [alt]="prod.title"
-            class="w-full max-h-[380px] md:max-h-[420px] object-contain drop-shadow-md"
+            class="w-full max-h-[380px] md:max-h-[420px] object-contain drop-shadow-md transition-all duration-300"
           />
         </div>
 
@@ -59,10 +59,10 @@
             <!-- التقييمات والريفيوز -->
             <div class="flex items-center gap-2 mt-4">
               <div class="flex items-center text-black">
-                ★ <span class="text-gray-900 font-black mr-1">{{ prod.rating }}</span>
+                ★ <span class="text-gray-900 font-black me-1">{{ prod.rating }}</span>
               </div>
               <span class="text-gray-400 text-sm font-medium"
-                >({{ prod.reviews_count }} تقييم)</span
+                >({{ prod.reviews_count }} {{ 'PRODUCT_DETAILS.REVIEWS' | translate }})</span
               >
             </div>
 
@@ -89,27 +89,63 @@
             <!-- الأسعار والعملة -->
             <div class="flex items-baseline gap-4 mt-6">
               <span class="text-3xl font-black text-black">
-                {{ prod.price }}
-                <span class="text-lg font-normal text-gray-500">{{ prod.currency }}</span>
+                {{ displayPrice() }}
+                <span class="text-lg font-normal text-gray-500">{{ prod.currency || 'TL' }}</span>
               </span>
-              @if (prod.old_price) {
+              @if (displayOldPrice()) {
                 <span class="text-gray-400 line-through text-lg">
-                  {{ prod.old_price }} {{ prod.currency }}
+                  {{ displayOldPrice() }} {{ prod.currency || 'TL' }}
                 </span>
               }
             </div>
 
             <!-- حالة المخزون -->
             <div class="mt-3 text-sm">
-              @if (prod.stock > 0) {
+              @if (!isOutOfStock()) {
                 <span class="text-black font-bold flex items-center gap-1">
-                  ✔ متوفر في المخزن
-                  <span class="text-gray-500 font-normal">(متبقي {{ prod.stock }} قطع)</span>
+                  ✔ {{ 'PRODUCT_DETAILS.IN_STOCK' | translate }}
+                  <span class="text-gray-500 font-normal">({{ displayStock() }} {{ 'PRODUCT_DETAILS.PIECES_LEFT' | translate }})</span>
                 </span>
               } @else {
-                <span class="text-red-600 font-bold">✖ غير متوفر حالياً</span>
+                <span class="text-red-600 font-bold">✖ {{ 'PRODUCT_DETAILS.OUT_OF_STOCK' | translate }}</span>
               }
             </div>
+
+            <!-- خيارات المنتج (Variants) -->
+            @if (prod.variants && prod.variants.length > 0) {
+              <div class="mt-6 pt-5 border-t border-gray-100">
+                <div class="flex items-center justify-between mb-3">
+                  <span class="text-xs font-black text-gray-900 uppercase tracking-wider">
+                    {{ 'PRODUCT_DETAILS.SELECT_OPTION' | translate }}:
+                    <span class="text-gray-500 font-bold ms-1">{{ selectedVariant()?.name }}</span>
+                  </span>
+                </div>
+                <div class="flex flex-wrap gap-2.5">
+                  @for (v of prod.variants; track v.id) {
+                    <button
+                      type="button"
+                      (click)="selectVariant(v)"
+                      class="px-4 py-2.5 rounded-xl border text-sm font-bold transition flex items-center gap-2 cursor-pointer"
+                      [class.border-black]="selectedVariant()?.id === v.id"
+                      [class.bg-black]="selectedVariant()?.id === v.id"
+                      [class.text-white]="selectedVariant()?.id === v.id"
+                      [class.border-gray-200]="selectedVariant()?.id !== v.id"
+                      [class.text-gray-800]="selectedVariant()?.id !== v.id"
+                      [class.hover:border-black]="selectedVariant()?.id !== v.id"
+                      [class.opacity-40]="v.stock <= 0"
+                    >
+                      @if (v.image) {
+                        <img [src]="v.image" [alt]="v.name" class="w-5 h-5 rounded-full object-cover shrink-0 border border-gray-300" />
+                      }
+                      <span>{{ v.name }}</span>
+                      @if (v.stock <= 0) {
+                        <span class="text-[10px] bg-red-100 text-red-600 px-1.5 py-0.5 rounded font-bold ms-1">{{ 'PRODUCT_DETAILS.OUT_OF_STOCK' | translate }}</span>
+                      }
+                    </button>
+                  }
+                </div>
+              </div>
+            }
           </div>
 
           <!-- عداد الكمية وزر الإضافة إلى السلة -->
@@ -119,7 +155,16 @@
             <!-- زر الإضافة للسلة -->
             <button
               (click)="addToCart(prod.id)"
-              class="w-full sm:flex-1 bg-black hover:bg-gray-800 text-white font-black py-4 px-6 rounded-2xl transition duration-300 flex items-center justify-center gap-3 shadow-xl hover:shadow-2xl cursor-pointer"
+              [disabled]="isOutOfStock()"
+              class="w-full sm:flex-1 font-black py-4 px-6 rounded-2xl transition duration-300 flex items-center justify-center gap-3 shadow-xl"
+              [class.bg-black]="!isOutOfStock()"
+              [class.hover:bg-gray-800]="!isOutOfStock()"
+              [class.text-white]="!isOutOfStock()"
+              [class.hover:shadow-2xl]="!isOutOfStock()"
+              [class.cursor-pointer]="!isOutOfStock()"
+              [class.bg-gray-300]="isOutOfStock()"
+              [class.text-gray-500]="isOutOfStock()"
+              [class.cursor-not-allowed]="isOutOfStock()"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -135,19 +180,19 @@
                   d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                 />
               </svg>
-              إضافة إلى السلة
+              {{ 'PRODUCT_DETAILS.ADD_TO_CART' | translate }}
             </button>
           </div>
         </div>
       </div>
     } @else {
       <div class="text-center py-20">
-        <p class="text-gray-500 text-lg mb-4">عذراً، لم يتم العثور على هذا المنتج.</p>
+        <p class="text-gray-500 text-lg mb-4">{{ 'PRODUCT_DETAILS.NOT_FOUND' | translate }}</p>
         <a
           routerLink="/shop"
           class="bg-black cursor-pointer text-white px-6 py-3 rounded-xl font-bold inline-block hover:bg-gray-800 transition"
         >
-          العودة للمنتجات
+          {{ 'PRODUCT_DETAILS.BACK_TO_PRODUCTS' | translate }}
         </a>
       </div>
     }

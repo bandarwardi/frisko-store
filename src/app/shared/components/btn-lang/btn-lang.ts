@@ -12,7 +12,7 @@ export class BtnLang implements OnInit {
   currentLang = signal<string>('tr');
   private readonly pLATFORM_ID = inject(PLATFORM_ID);
   ngOnInit(): void {
-    if (localStorage.getItem('lang') && isPlatformBrowser(this.pLATFORM_ID)) {
+    if (isPlatformBrowser(this.pLATFORM_ID) && localStorage.getItem('lang')) {
       this.currentLang.set(localStorage.getItem('lang')!);
     }
   }

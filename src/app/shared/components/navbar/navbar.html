@@ -77,8 +77,8 @@
           >
         </li>
 
-        <!-- dynamic categories as Mega Menu -->
-        @for (category of navLinks(); track category.id || category.slug) {
+        <!-- dynamic top 2 categories as Mega Menu -->
+        @for (category of topCategories(); track category.id || category.slug) {
           <li class="relative group py-2">
             <a
               [routerLink]="['/shop']"
@@ -97,7 +97,7 @@
             <!-- Mega Dropdown Panel (Shein Style) -->
             @if (category.children && category.children.length > 0) {
               <div
-                class="absolute top-full right-0 w-72 bg-white border border-gray-100 shadow-2xl rounded-2xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 z-50"
+                class="absolute top-full start-0 w-72 bg-white border border-gray-100 shadow-2xl rounded-2xl p-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-3 group-hover:translate-y-0 z-50"
               >
                 <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                   <span class="text-xs font-black text-black uppercase tracking-wider">
@@ -112,7 +112,7 @@
                   </a>
                 </div>
 
-                <ul class="space-y-2" dir="rtl">
+                <ul class="space-y-2">
                   @for (sub of category.children; track sub.id || sub.slug) {
                     <li class="flex items-center gap-3">
                       <div
@@ -290,8 +290,7 @@
             expandedMobileCategory() === category.slug
           ) {
             <ul
-              class="pr-4 pl-2 my-2 space-y-2 border-r-2 border-black/10 text-sm font-medium"
-              dir="rtl"
+              class="px-3 my-2 space-y-2 border-s-2 border-black/10 text-sm font-medium"
             >
               @for (sub of category.children; track sub.id || sub.slug) {
                 <li class="flex items-center gap-3">

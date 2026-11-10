@@ -8,7 +8,7 @@
     "SIGN_OUT": "Sign Out",
     "SEARCH_PLACEHOLDER": "Search for products...",
     "VIEW_ALL": "View All",
-     "LOGO": "Frisko"
+    "LOGO": "Frisko"
   },
   "HOME": {
     "SHOP_BY_CATEGORIES": "Shop By Categories",
@@ -20,9 +20,9 @@
     "NO_PRODUCTS": "No products currently available."
   },
   "FOOTER": {
-     "LOGO": "Frisko",
+    "LOGO": "Frisko",
     "FREE_SHIPPING": "Free Shipping",
-    "FREE_SHIPPING_SUB": "On orders over 500 EGP",
+    "FREE_SHIPPING_SUB": "On orders over 500 TL",
     "EASY_RETURNS": "Easy Returns",
     "EASY_RETURNS_SUB": "14-day return policy",
     "SUPPORT": "24/7 Support",
@@ -55,7 +55,33 @@
     "BREADCRUMB_TRENDING": "Trending Products",
     "BREADCRUMB_ALL": "All Items"
   },
- "AUTH": {
+  "FILTER": {
+    "TITLE": "Filters",
+    "CLEAR_ALL": "Clear All",
+    "PRICE": "Price Range",
+    "MIN": "Min",
+    "MAX": "Max",
+    "CATEGORIES": "Categories",
+    "ALL_CATEGORIES": "All Categories",
+    "BRANDS": "Brands",
+    "SIZES": "Sizes",
+    "COLORS": "Colors",
+    "VOLUMES": "Volumes & Sizes",
+    "OTHER_OPTIONS": "Other Options",
+    "IN_STOCK_ONLY": "In Stock Only",
+    "SORT_BY": "Sort By",
+    "SORT_LATEST": "Newest Arrivals",
+    "SORT_PRICE_ASC": "Price: Low to High",
+    "SORT_PRICE_DESC": "Price: High to Low",
+    "SORT_POPULAR": "Most Popular",
+    "SORT_RATING": "Top Rated",
+    "RESULTS_COUNT": "products listed",
+    "SHOW_RESULTS": "Show Results",
+    "APPLY": "Apply",
+    "FILTER_BUTTON": "Filter Products",
+    "NO_PRODUCTS_MATCH": "No products match the selected filters."
+  },
+  "AUTH": {
     "WELCOME": "Welcome to Frisko",
     "OR": "Or",
     "BACK_TO_STORE": "back to store shopping",
@@ -125,5 +151,17 @@
     "FINALIZE_ORDER": "Finalize the order",
     "ORDER_SUMMARY": "Order Summary",
     "COUPON_CODE": "Coupon Code"
+  },
+  "PRODUCT_DETAILS": {
+    "BACK_TO_PRODUCTS": "Back to Products",
+    "LOADING": "Loading product details...",
+    "REVIEWS": "reviews",
+    "IN_STOCK": "In Stock",
+    "PIECES_LEFT": "pieces left",
+    "OUT_OF_STOCK": "Currently Out of Stock",
+    "ADD_TO_CART": "Add to Cart",
+    "NOT_FOUND": "Sorry, this product was not found.",
+    "ADDED_SUCCESS": "Product added successfully to your cart",
+    "SELECT_OPTION": "Select Option / Size / Color"
   }
 }

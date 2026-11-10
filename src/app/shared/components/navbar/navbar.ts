@@ -22,6 +22,7 @@ export class Navbar implements OnInit {
   private product = inject(SProduct);
 
   navLinks = signal<Icategories[]>([]);
+  topCategories = computed(() => this.navLinks().slice(0, 2));
   isMenuOpen = signal<boolean>(false);
   expandedMobileCategory = signal<string | null>(null); // لتحديد القسم الفرعي المفتوح في الموبايل
 

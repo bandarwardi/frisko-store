@@ -28,4 +28,8 @@ export class SProduct {
   getProductDetails(id: string | number): Observable<any> {
     return this.http.get(environment.baseUrl + `/api/v1/products/${id}`);
   }
+
+  getFilters(): Observable<any> {
+    return this.http.get(environment.baseUrl + `/api/v1/products/filters`);
+  }
 }

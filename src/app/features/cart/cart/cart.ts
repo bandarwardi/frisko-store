@@ -43,10 +43,16 @@ export class Cart implements OnInit {
     this.cartItems.set([...items]);
   }
 
-  // زيادة الكمية داخل صفحة السلة باستخدام الـ ID
-  increaseQuantity(productId: any): void {
+  // دالة مساعدة للحصول على المفتاح المميز للعنصر
+  getItemKey(item: any): string {
+    return item.cart_id || `${item.product_id || item.product?.id || item.id}_${item.variant_id ?? 'default'}`;
+  }
+
+  // زيادة الكمية داخل صفحة السلة باستخدام العنصر
+  increaseQuantity(cartItem: any): void {
+    const key = this.getItemKey(cartItem);
     const items = [...this.cartItems()];
-    const item = items.find((p: any) => p.id === productId || p.product?.id === productId);
+    const item = items.find((p: any) => this.getItemKey(p) === key);
 
     if (item) {
       item.quantity = (Number(item.quantity) || 1) + 1;
@@ -55,9 +61,10 @@ export class Cart implements OnInit {
   }
 
   // تقليل الكمية داخل صفحة السلة
-  decreaseQuantity(productId: any): void {
+  decreaseQuantity(cartItem: any): void {
+    const key = this.getItemKey(cartItem);
     const items = [...this.cartItems()];
-    const item = items.find((p: any) => p.id === productId || p.product?.id === productId);
+    const item = items.find((p: any) => this.getItemKey(p) === key);
 
     if (item) {
       const currentQty = Number(item.quantity) || 1;
@@ -67,12 +74,11 @@ export class Cart implements OnInit {
       }
     }
   }
-  removeItem(productId: number) {
-    let currentItems = this.cartItems();
 
-    // بنصفى المنتجات ونشيل المنتج اللي الـ id بتاعه مطابق
-    currentItems = currentItems.filter(
-      (item: any) => item.product?.id !== productId && item.id !== productId,
+  removeItem(cartItem: any) {
+    const key = this.getItemKey(cartItem);
+    let currentItems = this.cartItems().filter(
+      (item: any) => this.getItemKey(item) !== key
     );
 
     // نحدث الـ LocalStorage والـ Signal

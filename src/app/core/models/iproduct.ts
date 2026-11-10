@@ -1,3 +1,50 @@
+export interface IFilterOptionItem {
+  name: string;
+  count: number;
+  hex?: string | null;
+}
+
+export interface IFilterCategoryItem {
+  id: number;
+  name: string;
+  slug: string;
+  parent_id?: number | null;
+  count: number;
+}
+
+export interface IFilterBrandItem {
+  id: number;
+  name: string;
+  slug: string;
+  count: number;
+}
+
+export interface IProductFiltersData {
+  price_range: {
+    min: number;
+    max: number;
+  };
+  categories: IFilterCategoryItem[];
+  brands: IFilterBrandItem[];
+  sizes: IFilterOptionItem[];
+  colors: IFilterOptionItem[];
+  volumes: IFilterOptionItem[];
+  other_options: IFilterOptionItem[];
+}
+
+export interface IVariant {
+  id: number;
+  product_id: number;
+  name: string;
+  price: string | number;
+  old_price?: string | number | null;
+  stock: number;
+  sku?: string | null;
+  image?: string | null;
+  created_at?: string;
+  updated_at?: string;
+}
+
 export interface Iproduct {
   id: number;
   category_id: number;
@@ -25,6 +72,7 @@ export interface Iproduct {
   brand: Brand;
   images: any[];
   tags: Tag[];
+  variants?: IVariant[];
 }
 
 interface Tag {

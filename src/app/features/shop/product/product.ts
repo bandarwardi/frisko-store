@@ -6,10 +6,11 @@ import { HttpParams } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { SProduct } from '../../../core/services/s-product';
 import { isPlatformBrowser } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product',
-  imports: [],
+  imports: [TranslatePipe],
   templateUrl: './product.html',
   styleUrl: './product.css',
 })
@@ -25,35 +26,20 @@ export class Product implements OnInit {
 
   ngOnInit(): void {
     this.getProduct();
-    this.activatedRoute.queryParams.subscribe((params) => {
-      const searchKeyword = params['search']; // دي الكلمة اللي جاية من النافبار
-
-      if (searchKeyword) {
-        this.fetchProducts(searchKeyword); // لو فيه كلمة بحث، ابعت هات المنتجات بالبحث
-      } else {
-        this.fetchProducts(); // لو مفيش بحث، هات كل المنتجات عادي
-      }
-    });
   }
 
-  fetchProducts(searchKey?: string) {
-    this.isLoading.set(true);
-    let params = new HttpParams();
-
-    if (searchKey) {
-      params = params.set('search', searchKey);
-    }
-  }
   getProduct(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
+      this.isLoading.set(true);
       this.product.getProduct(params).subscribe({
         next: (res) => {
-          let data = res.data.data;
+          let data = res.data?.data || [];
           this.productList.set(data);
-          // console.log(data);
+          this.isLoading.set(false);
         },
         error: (err) => {
-          console.log(err);
+          console.error('Failed to load products:', err);
+          this.isLoading.set(false);
         },
       });
     });

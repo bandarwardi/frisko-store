@@ -12,13 +12,13 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <!-- القسم الأول: قائمة المنتجات في السلة (عمودين) -->
       <div class="lg:col-span-2 space-y-4">
-        @for (cartItem of cartItems(); track cartItem.product?.id || cartItem.id) {
+        @for (cartItem of cartItems(); track cartItem.cart_id || cartItem.product?.id || cartItem.id) {
           <div
             class="bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 transition hover:border-gray-200"
           >
             <div class="flex items-center space-x-4 rtl:space-x-reverse w-full sm:w-auto">
               <img
-                [src]="cartItem.product?.primary_image || cartItem.primary_image"
+                [src]="cartItem.primary_image || cartItem.product?.primary_image"
                 alt="Product"
                 class="w-20 h-20 object-cover rounded-xl bg-gray-100 shrink-0 border border-gray-100"
               />
@@ -33,6 +33,11 @@
                       cartItem.description
                   }}
                 </h3>
+                @if (cartItem.variant_name) {
+                  <span class="inline-block mt-1 px-2.5 py-0.5 rounded-md bg-gray-100 text-xs font-bold text-gray-800 border border-gray-200">
+                    {{ cartItem.variant_name }}
+                  </span>
+                }
                 <span class="text-black font-black text-base mt-1 block">
                   <span class="text-2xs font-normal text-gray-500 me-1">{{
                     'CART.CURRENCY' | translate
@@ -46,14 +51,14 @@
             <div class="flex items-center justify-between sm:justify-end w-full sm:w-auto gap-4">
               <div class="flex items-center border border-gray-300 rounded-xl bg-gray-50 p-0.5">
                 <button
-                  (click)="decreaseQuantity(cartItem.product?.id || cartItem.id)"
+                  (click)="decreaseQuantity(cartItem)"
                   class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center cursor-pointer"
                 >
                   -
                 </button>
                 <span class="px-4 text-sm font-black text-black">{{ cartItem.quantity }}</span>
                 <button
-                  (click)="increaseQuantity(cartItem.product?.id || cartItem.id)"
+                  (click)="increaseQuantity(cartItem)"
                   class="w-8 h-8 rounded-lg bg-white text-black font-extrabold shadow-sm hover:bg-black hover:text-white transition flex items-center justify-center cursor-pointer"
                 >
                   +
@@ -61,7 +66,7 @@
               </div>
 
               <button
-                (click)="removeItem(cartItem.product?.id || cartItem.id)"
+                (click)="removeItem(cartItem)"
                 class="text-red-500 hover:text-red-600 transition p-2 cursor-pointer"
                 [title]="'CART.REMOVE_TITLE' | translate"
               >

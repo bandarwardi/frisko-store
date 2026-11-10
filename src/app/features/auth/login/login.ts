@@ -34,7 +34,7 @@ export class Login {
       this.sauth.signIn(this.loginForm.value).subscribe({
         next: (res) => {
           console.log(res);
-          if (res.message === 'تم تسجيل الدخول بنجاح') {
+          if (res.data?.token || res.message === 'تم تسجيل الدخول بنجاح' || res.success) {
             localStorage.setItem('freshToken', res.data.token);
             localStorage.setItem('freshUser', JSON.stringify(res.data.user));
             this.sauth.isLogged.set(true);

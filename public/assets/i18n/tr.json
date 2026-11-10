@@ -20,9 +20,9 @@
     "NO_PRODUCTS": "Şu anda mevcut ürün bulunmamaktadır."
   },
   "FOOTER": {
-     "LOGO": "Frisko",
+    "LOGO": "Frisko",
     "FREE_SHIPPING": "Ücretsiz Kargo",
-    "FREE_SHIPPING_SUB": "500 EGP üzeri siparişlerde",
+    "FREE_SHIPPING_SUB": "500 TL üzeri siparişlerde",
     "EASY_RETURNS": "Kolay İade",
     "EASY_RETURNS_SUB": "14 gün içinde iade imkanı",
     "SUPPORT": "7/24 Destek",
@@ -54,6 +54,32 @@
     "SUBTITLE": "En son trendleri, günlük yeni gelenleri ve sizin için özel hazırlanan en iyi fırsatları keşfedin. Rakipsiz fiyatlarla kaliteli ürünler!",
     "BREADCRUMB_TRENDING": "Trend Ürünler",
     "BREADCRUMB_ALL": "Tüm Ürünler"
+  },
+  "FILTER": {
+    "TITLE": "Filtreler",
+    "CLEAR_ALL": "Tümünü Temizle",
+    "PRICE": "Fiyat Aralığı",
+    "MIN": "Min",
+    "MAX": "Maks",
+    "CATEGORIES": "Kategoriler",
+    "ALL_CATEGORIES": "Tüm Kategoriler",
+    "BRANDS": "Markalar",
+    "SIZES": "Bedenler",
+    "COLORS": "Renkler",
+    "VOLUMES": "Hacim / Boyut",
+    "OTHER_OPTIONS": "Diğer Seçenekler",
+    "IN_STOCK_ONLY": "Sadece Stoktakiler",
+    "SORT_BY": "Sırala",
+    "SORT_LATEST": "En Yeniler",
+    "SORT_PRICE_ASC": "Fiyat: Düşükten Yükseğe",
+    "SORT_PRICE_DESC": "Fiyat: Yüksekten Düşüğe",
+    "SORT_POPULAR": "En Popüler",
+    "SORT_RATING": "En Yüksek Puan",
+    "RESULTS_COUNT": "ürün listeleniyor",
+    "SHOW_RESULTS": "Sonuçları Göster",
+    "APPLY": "Uygula",
+    "FILTER_BUTTON": "Filtrele",
+    "NO_PRODUCTS_MATCH": "Seçilen filtrelere uygun ürün bulunamadı."
   },
   "AUTH": {
     "WELCOME": "Frisko'ya Hoş Geldiniz",
@@ -125,5 +151,17 @@
     "FINALIZE_ORDER": "Siparişi Onayla",
     "ORDER_SUMMARY": "Sipariş Özeti",
     "COUPON_CODE": "İndirim Kuponu"
+  },
+  "PRODUCT_DETAILS": {
+    "BACK_TO_PRODUCTS": "Ürünlere Geri Dön",
+    "LOADING": "Ürün detayları yükleniyor...",
+    "REVIEWS": "değerlendirme",
+    "IN_STOCK": "Stokta var",
+    "PIECES_LEFT": "adet kaldı",
+    "OUT_OF_STOCK": "Şu anda stokta yok",
+    "ADD_TO_CART": "Sepete Ekle",
+    "NOT_FOUND": "Maalesef bu ürün bulunamadı.",
+    "ADDED_SUCCESS": "Ürün başarıyla sepetinize eklendi",
+    "SELECT_OPTION": "Seçenek / Beden / Renk Seçin"
   }
 }
