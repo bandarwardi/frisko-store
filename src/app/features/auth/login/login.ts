@@ -33,7 +33,6 @@ export class Login {
       // console.log(this.loginForm.value);
       this.sauth.signIn(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log(res);
           if (res.data?.token || res.message === 'تم تسجيل الدخول بنجاح' || res.success) {
             localStorage.setItem('freshToken', res.data.token);
             localStorage.setItem('freshUser', JSON.stringify(res.data.user));
@@ -41,9 +40,7 @@ export class Login {
             this.router.navigate(['/home']);
           }
         },
-        error: (err) => {
-          console.log(err);
-        },
+        error: (err) => {},
       });
     } else {
       this.loginForm.markAllAsTouched();

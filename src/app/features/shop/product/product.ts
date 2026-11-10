@@ -37,8 +37,7 @@ export class Product implements OnInit {
           this.productList.set(data);
           this.isLoading.set(false);
         },
-        error: (err) => {
-          console.error('Failed to load products:', err);
+        error: () => {
           this.isLoading.set(false);
         },
       });

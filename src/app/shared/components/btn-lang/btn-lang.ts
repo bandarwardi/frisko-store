@@ -18,7 +18,6 @@ export class BtnLang implements OnInit {
   }
   private readonly myTranslateService = inject(MyTranslateService);
   change(lang: string): void {
-    console.log(lang);
     this.myTranslateService.changeLang(lang);
   }
 }

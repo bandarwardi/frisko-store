@@ -42,9 +42,7 @@ export class Slider implements OnInit {
 
         // console.log(this.heroSlids());
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 }

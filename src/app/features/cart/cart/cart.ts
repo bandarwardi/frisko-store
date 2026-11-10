@@ -32,9 +32,6 @@ export class Cart implements OnInit {
     const items = this.cartItems();
 
     this.cartId.set(items.map((item) => item.cart_id));
-
-    console.log(this.cartItems());
-    console.log(this.cartId());
   }
 
   // دالة مساعدة للحفظ والتحديث الفوري

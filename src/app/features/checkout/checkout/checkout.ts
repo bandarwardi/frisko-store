@@ -60,12 +60,9 @@ export class Checkout {
       items: formattedItems,
     };
 
-    console.log('Body رايح للباك إند:', checkoutBody);
-
     // 4. الإرسال
     this.scart.creatVieOrder(checkoutBody).subscribe({
       next: (req) => {
-        console.log('تمت العملية بنجاح:', req);
         this.toastr.success(req.message, 'Frisko');
 
         // مسح السلة بعد نجاح الأوردر

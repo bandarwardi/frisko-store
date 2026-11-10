@@ -30,7 +30,6 @@ export class Home implements OnInit {
         this.categories.set(homeData.categories);
         this.latestProducts.set(homeData.latest_products);
         this.banners.set(homeData.banners.home_middle[0]);
-        console.log(this.categories());
       },
     });
   }
